@@ -15,7 +15,7 @@ beforeAll(async () => {
   token = res.body.token;
 });
 
-test("POST / carts", async () => {
+test("POST / cart", async () => {
   const product =  await Product.create({
     title: "phone",
     description: "skadkkjaksdka",
@@ -27,7 +27,7 @@ test("POST / carts", async () => {
     quantity: 10,
   };
   const res = await request(app)
-    .post("/carts")
+    .post("/cart")
     .send(cart)
     .set("Authorization", `Bearer ${token}`);
   await product.destroy();
@@ -36,27 +36,27 @@ test("POST / carts", async () => {
   expect(res.body.id).toBeDefined();
 });
 
-test("GET/ carts", async () => {
-  const res = await request(app).get("/carts").set("Authorization", `Bearer ${token}`);;
+test("GET/ cart", async () => {
+  const res = await request(app).get("/cart").set("Authorization", `Bearer ${token}`);;
   expect(res.status).toBe(200);
   expect(res.body).toHaveLength(1);
 });
 
-test("PUT /carts/:id ", async () => {
+test("PUT /cart/:id ", async () => {
   const newCart = {
     quantity: 15,
   };
   const res = await request(app)
-    .put(`/carts/${cartId}`)
+    .put(`/cart/${cartId}`)
     .send(newCart)
     .set("Authorization", `Bearer ${token}`);
   expect(res.status).toBe(200);
   expect(res.body.quantity).toBe(newCart.quantity);
 });
 
-test("DELETE/ carts/:id", async () => {
+test("DELETE/ cart/:id", async () => {
   const res = await request(app)
-    .delete(`/carts/${cartId}`)
+    .delete(`/cart/${cartId}`)
     .set("Authorization", `Bearer ${token}`);
   expect(res.status).toBe(204);
 });
